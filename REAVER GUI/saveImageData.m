@@ -19,6 +19,7 @@ function saveImageData(~,~,fig)
 	saveVariables.metrics.vesselArea	  = sum((handles.derivedPic.BW_2(:))) ;
 	saveVariables.metrics.numBranchPoints = max(size(handles.derivedPic.branchpoints.coords)) ;
 	saveVariables.metrics.meanVesselDiam  = meanVesselDiameter ;
+    saveVariables.metrics.distanceValues  = distanceValues(distanceValues>0) ;
 
 	saveVariables.constants				  = handles.constants ;
 	saveVariables.image_resolution		  = str2double(handles.imageResolutionValueEdit.String) ;
