@@ -1,4 +1,4 @@
-function [metric_st, short_lbl_st] = reaver_quantify_network(mat_path)
+function [metric_st, short_lbl_st, all_seg_diams] = reaver_quantify_network(mat_path)
 
 
 if isempty(dir(mat_path))
