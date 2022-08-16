@@ -941,7 +941,8 @@ function processAllImages_Callback(hObject,~)
 		saveVariables.metrics.vesselArea	  = sum((handles.derivedPic.BW_2(:))) ;
 		saveVariables.metrics.numBranchPoints = max(size(handles.derivedPic.branchpoints.coords)) ;
 		saveVariables.metrics.meanVesselDiam  = meanVesselDiameter ;
-		
+		saveVariables.metrics.distanceValues  = distanceValues(distanceValues>0) ; % added line to include distance values
+        
 		saveVariables.constants				  = handles.constants ;
 		saveVariables.image_resolution		  = str2double(handles.imageResolutionValueEdit.String) ;
 
@@ -2335,7 +2336,8 @@ function saveDataButton_Callback(hObject,~)
 	saveVariables.metrics.vesselArea	  = sum((handles.derivedPic.BW_2(:))) ;
 	saveVariables.metrics.numBranchPoints = max(size(handles.derivedPic.branchpoints.coords)) ;
 	saveVariables.metrics.meanVesselDiam  = meanVesselDiameter ;
-	
+	saveVariables.metrics.distanceValues  = distanceValues(distanceValues>0) ; % added line to include distance values
+    
 	saveVariables.constants				  = handles.constants ;
 	saveVariables.image_resolution		  = str2double(handles.imageResolutionValueEdit.String) ;
 	
