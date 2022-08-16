@@ -994,11 +994,14 @@ function quantifyAllImage_Callback(hObject,~)
 	
     
     results_seg_diams = cell(1, numel(results_tbl.image_name)); % create cell for storing segment diameters
+    results_all_diams = cell(1, numel(results_tbl.image_name)); % create cell for storing all diameters
     
     % Process images
     for n=1:numel(results_tbl.image_name)
-        % Load analysis data of image
-%         st = load([imageDirectory '/' processedImageDataFiles{n}]);
+        % Export all diameter measurements
+         st = load([imageDirectory '/' processedImageDataFiles{n}]);
+         current_name = repelem({results_tbl.image_name{n}}, size(st.metrics.distanceValues, 1))' ;
+         results_all_diams{n} = table(current_name, st.metrics.distanceValues); 
 
         % Load matlab file of image and quantify network
         [metric_st, short_lbl_st, all_seg_diams] = reaver_quantify_network([imageDirectory '/' ...
@@ -1015,14 +1018,18 @@ function quantifyAllImage_Callback(hObject,~)
         waitbar(n/numel(processedImageDataFiles),wtbr,'Quantifying...') ;
     end
     
-    % Concact cells into a single table
+    % Concact segment diameter cells into a single table
     results_seg_diams = vertcat(results_seg_diams{:}) ;
+    
+    % Concat all diameters cells into a single table
+    results_all_diams = vertcat(results_all_diams{:}) ;
 
     % Delete empty rows in result table. 
     
     try
 	writetable(results_tbl,[imageDirectory '/image_results.csv'])
     writetable(results_seg_diams, [imageDirectory '/image_segment_diameters.csv'])
+    writetable(results_all_diams, [imageDirectory '/image_all_diameters.csv'])
     catch ME
         errordlg("Output CSV file is open in another program. Please close.");
     end
