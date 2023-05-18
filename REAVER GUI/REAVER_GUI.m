@@ -703,7 +703,8 @@ function loadDirectory_Callback(hObject,~)
 %%%%% Start: Get and Process Directory Contents
 	directoryContentsImages = [dir( [selectedDirectory,handles.slash,'*.tif'] );...
 							   dir( [selectedDirectory,handles.slash,'*.jpg'] );...
-							   dir( [selectedDirectory,handles.slash,'*.bmp'] )];
+							   dir( [selectedDirectory,handles.slash,'*.bmp'] );...
+                               dir( [selectedDirectory,handles.slash,'*.png'] );];
 
 	if ispc % If it's a Windows computer, ignore the hidden files
 		[~,fileAttributes] = arrayfun( @(x) fileattrib([x.folder,handles.slash,x.name]) , directoryContentsImages ) ;
@@ -982,7 +983,9 @@ function quantifyAllImage_Callback(hObject,~)
     bv_user_verified=zeros(1,numel(processedImageDataFiles));
     tmp_index = 1:numel(user_verified_image_names); 
     for n=1:numel(processedImageDataFiles)
-        match_str = regexprep(processedImageDataFiles{n},'.mat$','.tif');
+        suffix = regexprep(char(st_dir.userVerified(n,1)), ...
+            extractBefore(char(st_dir.userVerified(n,1)), "."), "");
+        match_str = regexprep(processedImageDataFiles{n},'.mat$',suffix);
         tf = strncmp(match_str,user_verified_image_names,numel( match_str));
         
         bv_user_verified(n) = st_dir.userVerified{tmp_index(tf),2};
